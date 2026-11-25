@@ -16,7 +16,8 @@
             display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:600; margin:0 auto 16px; }
   h1 { margin:0; font-size:24px; }
   .title { margin:6px 0 2px; color:var(--muted); font-size:15px; }
-  .org { color:var(--accent); font-weight:600; font-size:15px; }
+  .org { margin-top:14px; }
+  .org img { width:170px; max-width:70%; height:auto; display:inline-block; }
   .infos { margin:24px 0; text-align:left; }
   .infos a { display:flex; align-items:center; gap:12px; padding:12px 8px; color:var(--text); text-decoration:none;
              border-top:1px solid #eee; font-size:16px; word-break:break-word; }
@@ -51,6 +52,7 @@ const C = {
   tel:      "+33 4 92 70 62 86",
   email:    "guillaume.rodriguez@loccitane.com",
   linkedin: "https://www.linkedin.com/in/guillaume-rodriguez-phd-64070898/",
+  logo:     "logo.png",    // laisse "" pour afficher le nom de la société en texte
   photo:    "photo.jpg",   // laisse "" pour afficher les initiales
   ville:    "Manosque · Marseille"
 };
@@ -60,7 +62,16 @@ const full = C.prenom + " " + C.nom;
 document.title = full + " – Carte de visite";
 document.getElementById("fullname").textContent = full;
 document.getElementById("jobtitle").textContent = C.titre;
-document.getElementById("org").textContent = C.societe;
+const org = document.getElementById("org");
+if (C.logo) {
+  const logo = document.createElement("img");
+  logo.src = C.logo;
+  logo.alt = C.societe;
+  logo.onerror = () => { org.textContent = C.societe; };
+  org.appendChild(logo);
+} else {
+  org.textContent = C.societe;
+}
 const avatar = document.getElementById("avatar");
 if (C.photo) {
   const img = document.createElement("img");
