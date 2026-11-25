@@ -22,7 +22,7 @@
   .avatar { width:112px; height:112px; overflow:hidden; border-radius:50%; background:var(--accent); color:var(--text);
             display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:600; margin:0 auto 16px; }
   h1 { margin:0; font-family:"LOccitane Serif Condensed",Georgia,serif; font-weight:500; font-size:32px; letter-spacing:.03em; text-transform:uppercase; }
-  .title { margin:6px 0 2px; color:var(--muted); font-size:15px; }
+  .title { margin:8px -12px 2px; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap; }
   .bio { margin:16px 8px 0; font-family:"LOccitane Serif",Georgia,serif; font-style:italic; font-weight:400; font-size:14px; line-height:1.5; color:var(--muted); }
   .org { margin:0 0 22px; }
   .org img { width:170px; max-width:70%; height:auto; display:inline-block; }
@@ -73,7 +73,22 @@ const C = {
 const full = C.prenom + " " + C.nom;
 document.title = full + " – Carte de visite";
 document.getElementById("fullname").textContent = full;
-document.getElementById("jobtitle").textContent = C.titre;
+const jobtitle = document.getElementById("jobtitle");
+const jobspan = document.createElement("span");
+jobspan.textContent = C.titre;
+jobtitle.appendChild(jobspan);
+function fitTitle() {
+  const avail = document.querySelector(".card").clientWidth - 24 - 16;
+  let size = 13;
+  jobtitle.style.fontSize = size + "px";
+  while (jobspan.getBoundingClientRect().width > avail && size > 6) {
+    size -= 0.25;
+    jobtitle.style.fontSize = size + "px";
+  }
+}
+fitTitle();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitTitle);
+window.addEventListener("resize", fitTitle);
 if (C.bio) document.getElementById("bio").textContent = C.bio; else document.getElementById("bio").remove();
 const org = document.getElementById("org");
 if (C.logo) {
