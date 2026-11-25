@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Carte de visite</title>
 <style>
-  :root { --accent:#5b7a3a; --bg:#f4f1ea; --card:#ffffff; --text:#222; --muted:#6b6b6b; }
+  :root { --accent:#FFC700; --bg:#F2E9DB; --card:#FBF9F6; --text:#3F2B2E; --muted:rgba(63,43,46,.72); --line:#F2E9DB; }
   * { box-sizing:border-box; }
   body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
          background:var(--bg); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--text); padding:20px; }
   body::before { content:""; position:fixed; inset:0; z-index:-1; background:url("fond.jpg") center/cover no-repeat;
                  filter:blur(9px); transform:scale(1.08); }
-  body::after { content:""; position:fixed; inset:0; z-index:-1; background:rgba(255,255,255,.12); }
+  body::after { content:""; position:fixed; inset:0; z-index:-1; background:rgba(242,233,219,.18); }
   .card { width:100%; max-width:380px; background:var(--card); border-radius:20px; padding:32px 24px;
           box-shadow:0 10px 30px rgba(0,0,0,.08); text-align:center; }
   .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
-  .avatar { width:112px; height:112px; overflow:hidden; border-radius:50%; background:var(--accent); color:#fff;
+  .avatar { width:112px; height:112px; overflow:hidden; border-radius:50%; background:var(--accent); color:var(--text);
             display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:600; margin:0 auto 16px; }
   h1 { margin:0; font-size:24px; }
   .title { margin:6px 0 2px; color:var(--muted); font-size:15px; }
@@ -24,12 +24,12 @@
   .org img { width:170px; max-width:70%; height:auto; display:inline-block; }
   .infos { margin:24px 0; text-align:left; }
   .infos a { display:flex; align-items:center; gap:12px; padding:12px 8px; color:var(--text); text-decoration:none;
-             border-top:1px solid #eee; font-size:16px; word-break:break-word; }
-  .infos a:last-child { border-bottom:1px solid #eee; }
+             border-top:1px solid var(--line); font-size:16px; word-break:break-word; }
+  .infos a:last-child { border-bottom:1px solid var(--line); }
   .infos span.ic { width:28px; text-align:center; font-size:18px; }
   .btn { display:block; width:100%; padding:14px; border-radius:12px; font-size:16px; font-weight:600;
          text-decoration:none; border:none; cursor:pointer; margin-top:10px; }
-  .btn.primary { background:var(--accent); color:#fff; }
+  .btn.primary { background:var(--accent); color:var(--text); }
   .li { display:block; width:52px; height:52px; margin:18px auto 0; }
   .li img { width:100%; height:100%; display:block; }
 </style>
@@ -98,7 +98,7 @@ const infos = document.getElementById("infos");
  ["📍", C.ville, null]].forEach(([ic, label, href]) => {
   if (!label) return;
   const a = document.createElement(href ? "a" : "div");
-  if (href) a.href = href; else a.style.cssText = "display:flex;gap:12px;padding:12px 8px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-size:16px";
+  if (href) a.href = href; else a.style.cssText = "display:flex;gap:12px;padding:12px 8px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:16px";
   a.innerHTML = '<span class="ic">' + ic + '</span><span></span>';
   a.lastChild.textContent = label;
   infos.appendChild(a);
