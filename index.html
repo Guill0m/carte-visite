@@ -43,14 +43,14 @@
 <script>
 /* ============ À MODIFIER : tes informations ============ */
 const C = {
-  prenom:   "Prénom",
-  nom:      "Nom",
+  prenom:   "Guillaume",
+  nom:      "Rodriguez",
   titre:    "Chargé de recherche clinique et neurosciences",
   societe:  "L'Occitane en Provence",
-  tel:      "+33 6 00 00 00 00",
-  email:    "prenom.nom@exemple.com",
-  linkedin: "https://www.linkedin.com/in/ton-profil/",
-  ville:    "Jouques, France"   // laisse "" pour ne pas l'afficher
+  tel:      "+33 4 92 70 62 86",
+  email:    "guillaume.rodriguez@loccitane.com",
+  linkedin: "https://www.linkedin.com/in/guillaume-rodriguez-phd-64070898/",
+  ville:    ""   // laisse "" pour ne pas l'afficher
 };
 /* ======================================================== */
 
@@ -81,7 +81,7 @@ function vcard() {
     "FN:" + full,
     "ORG:" + C.societe,
     "TITLE:" + C.titre,
-    "TEL;TYPE=CELL:" + C.tel,
+    "TEL;TYPE=WORK,VOICE:" + C.tel,
     "EMAIL;TYPE=INTERNET:" + C.email,
     "URL;TYPE=LinkedIn:" + C.linkedin,
     C.ville ? "ADR;TYPE=HOME:;;;" + C.ville + ";;;" : "",
