@@ -32,8 +32,13 @@
              border-top:1px solid var(--line); font-size:16px; word-break:break-word; }
   .infos a:last-child { border-bottom:1px solid var(--line); }
   .infos span.ic { width:28px; text-align:center; font-size:18px; }
-  .infos .loc { display:flex; gap:12px; padding:12px 8px; border-top:1px solid var(--line); font-size:16px; word-break:break-word; }
   .infos > :last-child { border-bottom:1px solid var(--line); }
+  .lieux { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:0 0 20px; }
+  .tile { aspect-ratio:1/1; background:var(--line); border-radius:16px; padding:12px; display:flex; flex-direction:column;
+          align-items:center; justify-content:center; text-align:center; gap:6px; }
+  .tile .pin { font-size:20px; }
+  .tile strong { font-weight:500; font-size:16px; letter-spacing:.02em; }
+  .tile .site { font-size:12px; line-height:1.35; color:var(--muted); }
   .btn { font-family:inherit; display:block; width:100%; padding:14px; border-radius:12px; font-size:16px; font-weight:500;
          text-decoration:none; border:none; cursor:pointer; margin-top:10px; }
   .btn.primary { background:var(--accent); color:var(--text); }
@@ -56,6 +61,7 @@
   <p class="bio" id="bio"></p>
 
   <div class="infos" id="infos"></div>
+  <div class="lieux" id="lieux"></div>
 
   <button class="btn primary" id="addBtn">➕ Add to contacts</button>
   <div class="icons">
@@ -78,7 +84,10 @@ const C = {
   lienSociete: "https://fr.loccitane.com/qui-sommes-nous",   // le logo renvoie vers cette page
   logo:     "logo.png",    // laisse "" pour afficher le nom de la société en texte
   photo:    "photo.jpg",   // laisse "" pour afficher les initiales
-  lieux:    ["Manosque · R&D Center", "Marseille · Cosnat Neuroscience & Clinical Evaluation Lab"]
+  lieux:    [
+    { ville: "Manosque",  site: "R&D Center" },
+    { ville: "Marseille", site: "Cosnat Neuroscience & Clinical Evaluation Lab" }
+  ]
 };
 /* ======================================================== */
 
@@ -138,14 +147,23 @@ if (C.lienSociete) maison.href = C.lienSociete; else maison.remove();
 
 const infos = document.getElementById("infos");
 [["📞", C.tel, "tel:" + C.tel.replace(/\s/g,"")],
- ["✉️", C.email, "mailto:" + C.email],
- ...(C.lieux || []).map(l => ["📍", l, null])].forEach(([ic, label, href]) => {
+ ["✉️", C.email, "mailto:" + C.email]].forEach(([ic, label, href]) => {
   if (!label) return;
   const a = document.createElement(href ? "a" : "div");
   if (href) a.href = href; else a.className = "loc";
   a.innerHTML = '<span class="ic">' + ic + '</span><span></span>';
   a.lastChild.textContent = label;
   infos.appendChild(a);
+});
+
+const lieux = document.getElementById("lieux");
+(C.lieux || []).forEach(l => {
+  const t = document.createElement("div");
+  t.className = "tile";
+  t.innerHTML = '<span class="pin">📍</span><strong></strong><span class="site"></span>';
+  t.querySelector("strong").textContent = l.ville;
+  t.querySelector(".site").textContent = l.site;
+  lieux.appendChild(t);
 });
 
 function vcard() {
