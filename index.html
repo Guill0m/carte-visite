@@ -17,7 +17,7 @@
   h1 { margin:0; font-size:24px; }
   .title { margin:6px 0 2px; color:var(--muted); font-size:15px; }
   .bio { margin:16px 4px 0; font-size:14px; line-height:1.5; color:var(--muted); }
-  .org { margin-top:14px; }
+  .org { margin:0 0 22px; }
   .org img { width:170px; max-width:70%; height:auto; display:inline-block; }
   .infos { margin:24px 0; text-align:left; }
   .infos a { display:flex; align-items:center; gap:12px; padding:12px 8px; color:var(--text); text-decoration:none;
@@ -33,10 +33,10 @@
 </head>
 <body>
 <div class="card">
+  <div class="org" id="org"></div>
   <div class="avatar" id="avatar"></div>
   <h1 id="fullname"></h1>
   <div class="title" id="jobtitle"></div>
-  <div class="org" id="org"></div>
   <p class="bio" id="bio"></p>
 
   <div class="infos" id="infos"></div>
