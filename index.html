@@ -16,6 +16,7 @@
             display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:600; margin:0 auto 16px; }
   h1 { margin:0; font-size:24px; }
   .title { margin:6px 0 2px; color:var(--muted); font-size:15px; }
+  .bio { margin:16px 4px 0; font-size:14px; line-height:1.5; color:var(--muted); }
   .org { margin-top:14px; }
   .org img { width:170px; max-width:70%; height:auto; display:inline-block; }
   .infos { margin:24px 0; text-align:left; }
@@ -35,6 +36,7 @@
   <h1 id="fullname"></h1>
   <div class="title" id="jobtitle"></div>
   <div class="org" id="org"></div>
+  <p class="bio" id="bio"></p>
 
   <div class="infos" id="infos"></div>
 
@@ -52,6 +54,7 @@ const C = {
   tel:      "+33 4 92 70 62 86",
   email:    "guillaume.rodriguez@loccitane.com",
   linkedin: "https://www.linkedin.com/in/guillaume-rodriguez-phd-64070898/",
+  bio:      "Developing the neuroscience strategy at L'Occitane en Provence. Innovation and scientific rigor, applied to clinical evaluation.",
   logo:     "logo.png",    // laisse "" pour afficher le nom de la société en texte
   photo:    "photo.jpg",   // laisse "" pour afficher les initiales
   ville:    "Manosque · Marseille"
@@ -62,6 +65,7 @@ const full = C.prenom + " " + C.nom;
 document.title = full + " – Carte de visite";
 document.getElementById("fullname").textContent = full;
 document.getElementById("jobtitle").textContent = C.titre;
+if (C.bio) document.getElementById("bio").textContent = C.bio; else document.getElementById("bio").remove();
 const org = document.getElementById("org");
 if (C.logo) {
   const logo = document.createElement("img");
