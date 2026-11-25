@@ -11,7 +11,9 @@
   @font-face { font-family:"LOccitane Serif"; font-weight:400; font-style:italic; font-display:swap; src:url("fonts/LOccitaneSerif-Italic.woff2") format("woff2"); }
   :root { --accent:#FFC700; --bg:#F2E9DB; --card:#F9F5F0; --text:#3F2B2E; --muted:rgba(63,43,46,.72); --line:#F2E9DB; }
   * { box-sizing:border-box; }
-  html { min-height:100%; min-height:100lvh; background:var(--bg) url("fond-flou.jpg") center/cover no-repeat; }
+  html { min-height:100%; min-height:100lvh; background:#747370; }
+  .bg { position:fixed; inset:0; z-index:0; pointer-events:none; background:#4F473E url("fond-flou.jpg") center/cover no-repeat; animation:bgin 1.2s ease-out both; }
+  @keyframes bgin { from{opacity:0} to{opacity:1} }
   body { margin:0; min-height:100vh; min-height:100dvh; display:flex; align-items:center; justify-content:center;
          font-family:"LOccitane Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--text);
          padding:max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); }
@@ -86,12 +88,12 @@
   .tap { transition:transform .15s; }
   .tap:active { transform:scale(.96); }
   @media (max-height:700px) { .avwrap{width:84px} .avatar{width:84px; height:84px} .bio{font-size:12px} .org{margin-bottom:10px} }
-  @media (prefers-reduced-motion: reduce) { .veil { display:none; } }
+  @media (prefers-reduced-motion: reduce) { .bg { animation:none; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
-<div class="veil" aria-hidden="true"></div>
+<div class="bg" aria-hidden="true"></div>
 <div class="glow" aria-hidden="true"></div>
 <div class="card">
   <div class="org" id="org"></div>
