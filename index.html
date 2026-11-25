@@ -14,15 +14,16 @@
   body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
          background:var(--bg); font-family:"LOccitane Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--text); padding:20px; }
   body::before { content:""; position:fixed; inset:0; z-index:-1; background:url("fond.jpg") center/cover no-repeat;
-                 filter:blur(9px); transform:scale(1.08); }
+                 filter:blur(9px); transform:scale(1.08); animation:airbg 2s cubic-bezier(.2,.7,.2,1) .1s both; }
   body::after { content:""; position:fixed; inset:0; z-index:-1; background:rgba(242,233,219,.18); }
   .card { width:100%; max-width:380px; background:var(--card); border-radius:20px; padding:32px 24px;
-          box-shadow:0 2px 6px rgba(63,43,46,.10), 0 18px 36px rgba(63,43,46,.22), 0 44px 80px rgba(63,43,46,.28); text-align:center; }
+          box-shadow:0 2px 6px rgba(63,43,46,.10), 0 18px 36px rgba(63,43,46,.22), 0 44px 80px rgba(63,43,46,.28); text-align:center; animation:emerge 1s cubic-bezier(.2,.8,.2,1) .9s both; }
   .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
-  .avwrap { width:112px; margin:0 auto 16px; }
+  .avwrap { position:relative; width:112px; margin:0 auto 16px; }
+  .ring { position:absolute; inset:-5px; border-radius:50%; background:conic-gradient(#FFC700,rgba(255,199,0,0) 55%,#FFC700); animation:spin 5s linear infinite; }
   .badge { display:table; margin:10px auto 0; background:var(--accent); color:var(--text); font-weight:500; font-size:12px; letter-spacing:.08em;
            padding:3px 12px; border-radius:999px; }
-  .avatar { width:112px; height:112px; overflow:hidden; border-radius:50%; background:var(--accent); color:var(--text);
+  .avatar { position:relative; width:112px; height:112px; overflow:hidden; border-radius:50%; background:var(--accent); color:var(--text);
             display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:600; margin:0; }
   h1 { margin:0; font-family:"LOccitane Serif Condensed",Georgia,serif; font-weight:500; font-size:32px; letter-spacing:.03em; text-transform:uppercase; }
   .title { margin:8px -12px 2px; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap; }
@@ -34,33 +35,60 @@
   .infos a { display:flex; align-items:center; gap:12px; padding:12px 8px; color:var(--text); text-decoration:none;
              border-top:1px solid var(--line); font-size:16px; word-break:break-word; }
   .infos a:last-child { border-bottom:1px solid var(--line); }
-  .infos span.ic { width:28px; text-align:center; font-size:18px; }
+  .infos svg, .tile svg, .btn svg { flex:none; }
   .infos > :last-child { border-bottom:1px solid var(--line); }
   .lieux { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:0 0 20px; }
   .tile { aspect-ratio:1/1; background:var(--line); border-radius:16px; padding:12px; display:flex; flex-direction:column;
           align-items:center; justify-content:center; text-align:center; gap:6px; }
-  .tile .pin { font-size:20px; }
   .tile strong { font-weight:500; font-size:16px; letter-spacing:.02em; }
   .tile .site { font-size:12px; line-height:1.35; color:var(--muted); }
-  .btn { font-family:inherit; display:block; width:100%; padding:14px; border-radius:12px; font-size:16px; font-weight:500;
-         text-decoration:none; border:none; cursor:pointer; margin-top:10px; }
+  .btn { position:relative; overflow:hidden; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:8px;
+         width:100%; padding:14px; border-radius:12px; font-size:16px; font-weight:500;
+         text-decoration:none; border:none; cursor:pointer; animation:press 3s ease-in-out infinite; }
+  .btn::after { content:""; position:absolute; top:0; left:0; width:35%; height:100%;
+                background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent); animation:sweep 2.8s ease-in-out infinite; }
   .btn.primary { background:var(--accent); color:var(--text); }
   .maison { display:block; margin-top:18px; text-align:center; font-size:14px; color:var(--text); text-decoration:underline; text-underline-offset:3px; }
-  .icons { display:flex; justify-content:center; gap:16px; margin-top:18px; }
+  .icons { display:flex; justify-content:center; gap:40px; margin-top:18px; }
   .li, .lo { display:block; width:52px; height:52px; }
-  .lo { border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; }
+  .lo { border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; animation:pulse 2s ease-out infinite; }
   .lo img { width:56%; height:auto; display:block; }
-  .li { border-radius:50%; background:#007EBB; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .li { border-radius:50%; background:#007EBB; overflow:hidden; display:flex; align-items:center; justify-content:center; animation:pulseb 2s ease-out 1s infinite; }
   .li img { width:80%; height:80%; display:block; }
+
+  /* ---- Animations : apparition façon AirDrop, cascade, photo vivante, micro-interactions ---- */
+  @keyframes airbg { from{clip-path:circle(0 at 50% 0); opacity:0} to{clip-path:circle(160% at 50% 0); opacity:1} }
+  @keyframes airglow { 0%{opacity:0; transform:scale(.4)} 25%{opacity:1} 100%{opacity:0; transform:scale(2.2)} }
+  @keyframes emerge { from{opacity:0; transform:translateY(-34px) scale(.92); filter:blur(14px)} to{opacity:1; transform:none; filter:none} }
+  @keyframes up { from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:none} }
+  @keyframes pop { 0%{opacity:0; transform:scale(.6)} 70%{transform:scale(1.08)} 100%{opacity:1; transform:scale(1)} }
+  @keyframes reveal { from{clip-path:inset(0 100% 0 0)} to{clip-path:inset(0 0 0 0)} }
+  @keyframes spin { to{transform:rotate(360deg)} }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(255,199,0,.75)} 100%{box-shadow:0 0 0 16px rgba(255,199,0,0)} }
+  @keyframes pulseb { 0%{box-shadow:0 0 0 0 rgba(0,126,187,.75)} 100%{box-shadow:0 0 0 16px rgba(0,126,187,0)} }
+  @keyframes sweep { 0%{transform:translateX(-130%)} 60%,100%{transform:translateX(330%)} }
+  @keyframes press { 0%,86%,100%{transform:scale(1)} 92%{transform:scale(.95)} }
+  .glow { position:fixed; top:-120px; left:0; right:0; height:620px; z-index:4; pointer-events:none; transform-origin:50% 0;
+          background:radial-gradient(ellipse at 50% 20%,rgba(255,199,0,.55),rgba(255,236,170,.25) 40%,rgba(255,255,255,0) 70%);
+          animation:airglow 2.6s ease-out both; }
+  .s { animation:up .6s cubic-bezier(.2,.7,.2,1) both; animation-delay:calc(var(--i)*90ms + 1.5s); }
+  .s.avwrap { animation:pop .7s cubic-bezier(.2,.7,.2,1) 1.6s both; }
+  .s.nm { animation:reveal 1s ease 1.9s both; }
+  .s.badge { animation:pop .6s cubic-bezier(.2,.7,.2,1) 2.4s both; }
+  .tap { transition:transform .15s; }
+  .tap:active { transform:scale(.96); }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
+<div class="glow" aria-hidden="true"></div>
 <div class="card">
   <div class="org" id="org"></div>
   <div class="avwrap">
+    <div class="ring"></div>
     <div class="avatar" id="avatar"></div>
   </div>
-  <h1 id="fullname"></h1>
+  <h1 class="nm" id="fullname"></h1>
   <span class="badge" id="badge"></span>
   <div class="title" id="jobtitle"></div>
   <hr class="sep" id="sep">
@@ -69,10 +97,10 @@
   <div class="infos" id="infos"></div>
   <div class="lieux" id="lieux"></div>
 
-  <button class="btn primary" id="addBtn">➕ Add to contacts</button>
+  <div id="btnwrap"><button class="btn primary tap" id="addBtn"></button></div>
   <div class="icons">
-    <a class="lo" id="maisonLink" target="_blank" rel="noopener" aria-label="Découvrir la Maison L'Occitane en Provence"><img src="lo.png" alt="L'Occitane en Provence"></a>
-    <a class="li" id="linkedinBtn" target="_blank" rel="noopener" aria-label="Profil LinkedIn"><img src="linkedin.svg" alt="LinkedIn"></a>
+    <a class="lo tap" id="maisonLink" target="_blank" rel="noopener" aria-label="Découvrir la Maison L'Occitane en Provence"><img src="lo.png" alt="L'Occitane en Provence"></a>
+    <a class="li tap" id="linkedinBtn" target="_blank" rel="noopener" aria-label="Profil LinkedIn"><img src="linkedin.svg" alt="LinkedIn"></a>
   </div>
 </div>
 
@@ -109,7 +137,7 @@ function fitTitle() {
   const avail = document.querySelector(".card").clientWidth - 24 - 16;
   let size = 13;
   jobtitle.style.fontSize = size + "px";
-  while (jobspan.getBoundingClientRect().width > avail && size > 6) {
+  while (jobspan.offsetWidth > avail && size > 6) {
     size -= 0.25;
     jobtitle.style.fontSize = size + "px";
   }
@@ -154,13 +182,21 @@ document.getElementById("linkedinBtn").href = C.linkedin;
 const maison = document.getElementById("maisonLink");
 if (C.lienSociete) maison.href = C.lienSociete; else maison.remove();
 
+const ICON = (d) => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3F2B2E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
+const ICONS = {
+  phone: ICON('<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>'),
+  mail:  ICON('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>'),
+  pin:   ICON('<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>')
+};
+
 const infos = document.getElementById("infos");
-[["📞", C.tel, "tel:" + C.tel.replace(/\s/g,"")],
- ["✉️", C.email, "mailto:" + C.email]].forEach(([ic, label, href]) => {
+[["phone", C.tel, "tel:" + C.tel.replace(/\s/g,"")],
+ ["mail", C.email, "mailto:" + C.email]].forEach(([ic, label, href]) => {
   if (!label) return;
-  const a = document.createElement(href ? "a" : "div");
-  if (href) a.href = href; else a.className = "loc";
-  a.innerHTML = '<span class="ic">' + ic + '</span><span></span>';
+  const a = document.createElement("a");
+  a.href = href;
+  a.className = "tap";
+  a.innerHTML = ICONS[ic] + '<span></span>';
   a.lastChild.textContent = label;
   infos.appendChild(a);
 });
@@ -168,11 +204,20 @@ const infos = document.getElementById("infos");
 const lieux = document.getElementById("lieux");
 (C.lieux || []).forEach(l => {
   const t = document.createElement("div");
-  t.className = "tile";
-  t.innerHTML = '<span class="pin">📍</span><strong></strong><span class="site"></span>';
+  t.className = "tile tap";
+  t.innerHTML = ICONS.pin + '<strong></strong><span class="site"></span>';
   t.querySelector("strong").textContent = l.ville;
   t.querySelector(".site").textContent = l.site;
   lieux.appendChild(t);
+});
+
+const addBtn = document.getElementById("addBtn");
+addBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3F2B2E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add to contacts';
+
+/* Cascade d'entrée : chaque bloc de la carte reçoit son rang */
+[...document.querySelector(".card").children].forEach((el, i) => {
+  el.classList.add("s");
+  el.style.setProperty("--i", i);
 });
 
 function vcard() {
