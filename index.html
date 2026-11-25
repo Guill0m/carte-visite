@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carte de visite</title>
+<style>
+  :root { --accent:#5b7a3a; --bg:#f4f1ea; --card:#ffffff; --text:#222; --muted:#6b6b6b; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+         background:var(--bg); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--text); padding:20px; }
+  .card { width:100%; max-width:380px; background:var(--card); border-radius:20px; padding:32px 24px;
+          box-shadow:0 10px 30px rgba(0,0,0,.08); text-align:center; }
+  .avatar { width:96px; height:96px; border-radius:50%; background:var(--accent); color:#fff;
+            display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:600; margin:0 auto 16px; }
+  h1 { margin:0; font-size:24px; }
+  .title { margin:6px 0 2px; color:var(--muted); font-size:15px; }
+  .org { color:var(--accent); font-weight:600; font-size:15px; }
+  .infos { margin:24px 0; text-align:left; }
+  .infos a { display:flex; align-items:center; gap:12px; padding:12px 8px; color:var(--text); text-decoration:none;
+             border-top:1px solid #eee; font-size:16px; word-break:break-word; }
+  .infos a:last-child { border-bottom:1px solid #eee; }
+  .infos span.ic { width:28px; text-align:center; font-size:18px; }
+  .btn { display:block; width:100%; padding:14px; border-radius:12px; font-size:16px; font-weight:600;
+         text-decoration:none; border:none; cursor:pointer; margin-top:10px; }
+  .btn.primary { background:var(--accent); color:#fff; }
+  .btn.linkedin { background:#0a66c2; color:#fff; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="avatar" id="avatar"></div>
+  <h1 id="fullname"></h1>
+  <div class="title" id="jobtitle"></div>
+  <div class="org" id="org"></div>
+
+  <div class="infos" id="infos"></div>
+
+  <button class="btn primary" id="addBtn">➕ Ajouter à mes contacts</button>
+  <a class="btn linkedin" id="linkedinBtn" target="_blank" rel="noopener">Voir mon profil LinkedIn</a>
+</div>
+
+<script>
+/* ============ À MODIFIER : tes informations ============ */
+const C = {
+  prenom:   "Prénom",
+  nom:      "Nom",
+  titre:    "Chargé de recherche clinique et neurosciences",
+  societe:  "L'Occitane en Provence",
+  tel:      "+33 6 00 00 00 00",
+  email:    "prenom.nom@exemple.com",
+  linkedin: "https://www.linkedin.com/in/ton-profil/",
+  ville:    "Jouques, France"   // laisse "" pour ne pas l'afficher
+};
+/* ======================================================== */
+
+const full = C.prenom + " " + C.nom;
+document.title = full + " – Carte de visite";
+document.getElementById("fullname").textContent = full;
+document.getElementById("jobtitle").textContent = C.titre;
+document.getElementById("org").textContent = C.societe;
+document.getElementById("avatar").textContent = (C.prenom[0] + C.nom[0]).toUpperCase();
+document.getElementById("linkedinBtn").href = C.linkedin;
+
+const infos = document.getElementById("infos");
+[["📞", C.tel, "tel:" + C.tel.replace(/\s/g,"")],
+ ["✉️", C.email, "mailto:" + C.email],
+ ["📍", C.ville, null]].forEach(([ic, label, href]) => {
+  if (!label) return;
+  const a = document.createElement(href ? "a" : "div");
+  if (href) a.href = href; else a.style.cssText = "display:flex;gap:12px;padding:12px 8px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-size:16px";
+  a.innerHTML = '<span class="ic">' + ic + '</span><span></span>';
+  a.lastChild.textContent = label;
+  infos.appendChild(a);
+});
+
+function vcard() {
+  return [
+    "BEGIN:VCARD", "VERSION:3.0",
+    "N:" + C.nom + ";" + C.prenom + ";;;",
+    "FN:" + full,
+    "ORG:" + C.societe,
+    "TITLE:" + C.titre,
+    "TEL;TYPE=CELL:" + C.tel,
+    "EMAIL;TYPE=INTERNET:" + C.email,
+    "URL;TYPE=LinkedIn:" + C.linkedin,
+    C.ville ? "ADR;TYPE=HOME:;;;" + C.ville + ";;;" : "",
+    "END:VCARD"
+  ].filter(Boolean).join("\r\n");
+}
+
+document.getElementById("addBtn").addEventListener("click", () => {
+  const blob = new Blob([vcard()], { type: "text/vcard;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = (C.prenom + "-" + C.nom).toLowerCase() + ".vcf";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+});
+</script>
+</body>
+</html>
