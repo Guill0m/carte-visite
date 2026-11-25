@@ -63,6 +63,7 @@ const C = {
   email:    "guillaume.rodriguez@loccitane.com",
   linkedin: "https://www.linkedin.com/in/guillaume-rodriguez-phd-64070898/",
   bio:      "Developing the neuroscience strategy at L'Occitane en Provence. Innovation and scientific rigor, applied to clinical evaluation.",
+  lienSociete: "https://fr.loccitane.com/qui-sommes-nous",   // le logo renvoie vers cette page
   logo:     "logo.png",    // laisse "" pour afficher le nom de la société en texte
   photo:    "photo.jpg",   // laisse "" pour afficher les initiales
   ville:    "Manosque · Marseille"
@@ -80,7 +81,17 @@ if (C.logo) {
   logo.src = C.logo;
   logo.alt = C.societe;
   logo.onerror = () => { org.textContent = C.societe; };
-  org.appendChild(logo);
+  if (C.lienSociete) {
+    const a = document.createElement("a");
+    a.href = C.lienSociete;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.setAttribute("aria-label", C.societe);
+    a.appendChild(logo);
+    org.appendChild(a);
+  } else {
+    org.appendChild(logo);
+  }
 } else {
   org.textContent = C.societe;
 }
