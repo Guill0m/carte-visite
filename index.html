@@ -35,6 +35,7 @@
   .btn { font-family:inherit; display:block; width:100%; padding:14px; border-radius:12px; font-size:16px; font-weight:500;
          text-decoration:none; border:none; cursor:pointer; margin-top:10px; }
   .btn.primary { background:var(--accent); color:var(--text); }
+  .maison { display:block; margin-top:18px; text-align:center; font-size:14px; color:var(--text); text-decoration:underline; text-underline-offset:3px; }
   .li { display:block; width:52px; height:52px; margin:18px auto 0; }
   .li img { width:100%; height:100%; display:block; }
 </style>
@@ -52,6 +53,7 @@
 
   <button class="btn primary" id="addBtn">➕ Ajouter à mes contacts</button>
   <a class="li" id="linkedinBtn" target="_blank" rel="noopener" aria-label="Profil LinkedIn"><img src="linkedin.svg" alt="LinkedIn"></a>
+  <a class="maison" id="maisonLink" target="_blank" rel="noopener">Découvrir la Maison L'Occitane en Provence →</a>
 </div>
 
 <script>
@@ -123,6 +125,8 @@ if (C.photo) {
   avatar.textContent = (C.prenom[0] + C.nom[0]).toUpperCase();
 }
 document.getElementById("linkedinBtn").href = C.linkedin;
+const maison = document.getElementById("maisonLink");
+if (C.lienSociete) maison.href = C.lienSociete; else maison.remove();
 
 const infos = document.getElementById("infos");
 [["📞", C.tel, "tel:" + C.tel.replace(/\s/g,"")],
