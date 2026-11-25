@@ -50,7 +50,7 @@ const C = {
   tel:      "+33 4 92 70 62 86",
   email:    "guillaume.rodriguez@loccitane.com",
   linkedin: "https://www.linkedin.com/in/guillaume-rodriguez-phd-64070898/",
-  ville:    ""   // laisse "" pour ne pas l'afficher
+  ville:    "Manosque · Marseille"
 };
 /* ======================================================== */
 
@@ -84,7 +84,6 @@ function vcard() {
     "TEL;TYPE=WORK,VOICE:" + C.tel,
     "EMAIL;TYPE=INTERNET:" + C.email,
     "URL;TYPE=LinkedIn:" + C.linkedin,
-    C.ville ? "ADR;TYPE=HOME:;;;" + C.ville + ";;;" : "",
     "END:VCARD"
   ].filter(Boolean).join("\r\n");
 }
