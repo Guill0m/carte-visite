@@ -18,13 +18,15 @@
   .card { width:100%; max-width:380px; background:var(--card); border-radius:20px; padding:20px 20px;
           box-shadow:0 2px 6px rgba(63,43,46,.10), 0 18px 36px rgba(63,43,46,.22), 0 44px 80px rgba(63,43,46,.28); text-align:center; position:relative; z-index:2; animation:emerge 1s cubic-bezier(.2,.8,.2,1) .9s both; }
   .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
-  .avwrap { position:relative; width:84px; margin:0 auto 10px; }
+  .avwrap { position:relative; width:104px; margin:0 auto 10px; }
   .ring { position:absolute; inset:-4px; border-radius:50%; background:conic-gradient(#FFC700,rgba(255,199,0,0) 55%,#FFC700); animation:spin 5s linear infinite; }
   .badge { display:table; margin:8px auto 0; background:var(--accent); color:var(--text); font-weight:500; font-size:11px; letter-spacing:.08em;
            padding:2px 11px; border-radius:999px; }
-  .avatar { position:relative; width:84px; height:84px; overflow:hidden; border-radius:50%; background:var(--accent); color:var(--text);
+  .avatar { position:relative; width:104px; height:104px; overflow:hidden; border-radius:50%; background:var(--accent); color:var(--text);
             display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:600; margin:0; }
-  h1 { margin:0; font-family:"LOccitane Serif Condensed",Georgia,serif; font-weight:500; font-size:28px; letter-spacing:.03em; text-transform:uppercase; }
+  h1 { margin:0; font-family:"LOccitane Serif Condensed",Georgia,serif; font-weight:500; font-size:24px; letter-spacing:.03em; }
+  h1 .fn { text-transform:none; }
+  h1 .ln { text-transform:uppercase; }
   .title { margin:6px -12px 0; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap; }
   .sep { width:56px; height:2px; border:0; background:var(--accent); margin:12px auto 0; }
   .bio { margin:10px 4px 0; font-family:"LOccitane Serif",Georgia,serif; font-style:italic; font-weight:400; font-size:13px; line-height:1.45; color:var(--muted); }
@@ -83,7 +85,7 @@
   .s.badge { animation:pop .6s cubic-bezier(.2,.7,.2,1) 2.4s both; }
   .tap { transition:transform .15s; }
   .tap:active { transform:scale(.96); }
-  @media (max-height:700px) { .avwrap{width:68px} .avatar{width:68px; height:68px} .bio{font-size:12px} .org{margin-bottom:10px} }
+  @media (max-height:700px) { .avwrap{width:84px} .avatar{width:84px; height:84px} .bio{font-size:12px} .org{margin-bottom:10px} }
   @media (prefers-reduced-motion: reduce) { .veil { display:none; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
 </style>
@@ -137,7 +139,9 @@ const C = {
 
 const full = C.prenom + " " + C.nom;
 document.title = full + " – Carte de visite";
-document.getElementById("fullname").textContent = full;
+document.getElementById("fullname").innerHTML = '<span class="fn"></span> <span class="ln"></span>';
+document.querySelector("#fullname .fn").textContent = C.prenom;
+document.querySelector("#fullname .ln").textContent = C.nom;
 const jobtitle = document.getElementById("jobtitle");
 const jobspan = document.createElement("span");
 jobspan.textContent = C.titre;
