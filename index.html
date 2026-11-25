@@ -19,8 +19,11 @@
   .card { width:100%; max-width:380px; background:var(--card); border-radius:20px; padding:32px 24px;
           box-shadow:0 2px 6px rgba(63,43,46,.10), 0 18px 36px rgba(63,43,46,.22), 0 44px 80px rgba(63,43,46,.28); text-align:center; }
   .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+  .avwrap { position:relative; width:112px; margin:0 auto 16px; }
+  .badge { position:absolute; right:-16px; bottom:2px; background:var(--accent); color:var(--text); font-weight:500; font-size:13px; letter-spacing:.04em;
+           padding:4px 10px; border-radius:999px; border:3px solid var(--card); box-shadow:0 2px 6px rgba(63,43,46,.25); }
   .avatar { width:112px; height:112px; overflow:hidden; border-radius:50%; background:var(--accent); color:var(--text);
-            display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:600; margin:0 auto 16px; }
+            display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:600; margin:0; }
   h1 { margin:0; font-family:"LOccitane Serif Condensed",Georgia,serif; font-weight:500; font-size:32px; letter-spacing:.03em; text-transform:uppercase; }
   .title { margin:8px -12px 2px; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap; }
   .sep { width:56px; height:2px; border:0; background:var(--accent); margin:16px auto 0; }
@@ -54,7 +57,10 @@
 <body>
 <div class="card">
   <div class="org" id="org"></div>
-  <div class="avatar" id="avatar"></div>
+  <div class="avwrap">
+    <div class="avatar" id="avatar"></div>
+    <span class="badge" id="badge"></span>
+  </div>
   <h1 id="fullname"></h1>
   <div class="title" id="jobtitle"></div>
   <hr class="sep" id="sep">
@@ -82,6 +88,7 @@ const C = {
   linkedin: "https://www.linkedin.com/in/guillaume-rodriguez-phd-64070898/",
   bio:      "Developing the neuroscience strategy at L'Occitane en Provence. Innovation and scientific rigor, applied to clinical evaluation.",
   lienSociete: "https://fr.loccitane.com/qui-sommes-nous",   // le logo renvoie vers cette page
+  badge:    "PhD",         // laisse "" pour ne pas afficher de badge
   logo:     "logo.png",    // laisse "" pour afficher le nom de la société en texte
   photo:    "photo.jpg",   // laisse "" pour afficher les initiales
   lieux:    [
@@ -131,6 +138,8 @@ if (C.logo) {
 } else {
   org.textContent = C.societe;
 }
+const badge = document.getElementById("badge");
+if (C.badge) badge.textContent = C.badge; else badge.remove();
 const avatar = document.getElementById("avatar");
 if (C.photo) {
   const img = document.createElement("img");
