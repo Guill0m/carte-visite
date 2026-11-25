@@ -11,7 +11,9 @@
   @font-face { font-family:"LOccitane Serif"; font-weight:400; font-style:italic; font-display:swap; src:url("fonts/LOccitaneSerif-Italic.woff2") format("woff2"); }
   :root { --accent:#FFC700; --bg:#F2E9DB; --card:#F9F5F0; --text:#3F2B2E; --muted:rgba(63,43,46,.72); --line:#F2E9DB; }
   * { box-sizing:border-box; }
-  html { min-height:100%; min-height:100lvh; background:#F2E9DB; }
+  html { min-height:100%; min-height:100lvh; background:#4F473E; }
+  .bg { position:fixed; top:-60vh; bottom:-60vh; left:-20vw; right:-20vw; z-index:0; pointer-events:none; background:#4F473E url("fond-flou.jpg") center/cover no-repeat; animation:bgin 1.2s ease-out both; }
+  @keyframes bgin { from{opacity:0} to{opacity:1} }
   .top { position:fixed; top:0; left:0; right:0; z-index:5; background:#F2E9DB; text-align:center; padding:calc(env(safe-area-inset-top) + 10px) 12px 10px;
          box-shadow:0 1px 0 rgba(63,43,46,.08), 0 6px 18px rgba(63,43,46,.08); animation:down .8s cubic-bezier(.2,.7,.2,1) both; }
   @keyframes down { from{transform:translateY(-100%)} to{transform:none} }
@@ -89,11 +91,12 @@
   .tap { transition:transform .15s; }
   .tap:active { transform:scale(.96); }
   @media (max-height:700px) { .avwrap{width:84px} .avatar{width:84px; height:84px} .bio{font-size:12px} }
-  @media (prefers-reduced-motion: reduce) { .top { animation:none; } }
+  @media (prefers-reduced-motion: reduce) { .top, .bg { animation:none; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
+<div class="bg" aria-hidden="true"></div>
 <header class="top"><div class="org" id="org"></div></header>
 <div class="glow" aria-hidden="true"></div>
 <div class="card">
