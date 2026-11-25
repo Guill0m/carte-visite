@@ -11,12 +11,13 @@
   @font-face { font-family:"LOccitane Serif"; font-weight:400; font-style:italic; font-display:swap; src:url("fonts/LOccitaneSerif-Italic.woff2") format("woff2"); }
   :root { --accent:#FFC700; --bg:#F2E9DB; --card:#F9F5F0; --text:#3F2B2E; --muted:rgba(63,43,46,.72); --line:#F2E9DB; }
   * { box-sizing:border-box; }
-  html { min-height:100%; min-height:100lvh; background:#747370; }
-  .bg { position:fixed; top:-60vh; bottom:-60vh; left:-20vw; right:-20vw; z-index:0; pointer-events:none; background:#4F473E url("fond-flou.jpg") center/cover no-repeat; animation:bgin 1.2s ease-out both; }
-  @keyframes bgin { from{opacity:0} to{opacity:1} }
+  html { min-height:100%; min-height:100lvh; background:#F2E9DB; }
+  .top { position:fixed; top:0; left:0; right:0; z-index:5; background:#F2E9DB; text-align:center; padding:calc(env(safe-area-inset-top) + 10px) 12px 10px;
+         box-shadow:0 1px 0 rgba(63,43,46,.08), 0 6px 18px rgba(63,43,46,.08); animation:down .8s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes down { from{transform:translateY(-100%)} to{transform:none} }
   body { margin:0; min-height:100vh; min-height:100dvh; display:flex; align-items:center; justify-content:center;
          font-family:"LOccitane Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--text);
-         padding:max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); }
+         padding:calc(max(12px, env(safe-area-inset-top)) + 52px) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); }
   .card { width:100%; max-width:380px; background:var(--card); border-radius:20px; padding:20px 20px;
           box-shadow:0 2px 6px rgba(63,43,46,.10), 0 18px 36px rgba(63,43,46,.22), 0 44px 80px rgba(63,43,46,.28); text-align:center; position:relative; z-index:2; animation:emerge 1s cubic-bezier(.2,.8,.2,1) .9s both; }
   .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
@@ -32,8 +33,8 @@
   .title { margin:6px -12px 0; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap; }
   .sep { width:56px; height:2px; border:0; background:var(--accent); margin:12px auto 0; }
   .bio { margin:10px 4px 0; font-family:"LOccitane Serif",Georgia,serif; font-style:italic; font-weight:400; font-size:13px; line-height:1.45; color:var(--muted); }
-  .org { margin:0 0 14px; }
-  .org img { width:120px; max-width:60%; height:auto; display:inline-block; }
+  .org { margin:0; line-height:0; }
+  .org img { width:112px; max-width:60%; height:auto; display:inline-block; }
   .infos { margin:14px 0; text-align:left; }
   .infos a { display:flex; align-items:center; gap:10px; padding:8px 8px; color:var(--text); text-decoration:none;
              border-top:1px solid var(--line); font-size:13px; word-break:break-word; }
@@ -87,16 +88,15 @@
   .s.badge { animation:pop .6s cubic-bezier(.2,.7,.2,1) 2.4s both; }
   .tap { transition:transform .15s; }
   .tap:active { transform:scale(.96); }
-  @media (max-height:700px) { .avwrap{width:84px} .avatar{width:84px; height:84px} .bio{font-size:12px} .org{margin-bottom:10px} }
-  @media (prefers-reduced-motion: reduce) { .bg { animation:none; } }
+  @media (max-height:700px) { .avwrap{width:84px} .avatar{width:84px; height:84px} .bio{font-size:12px} }
+  @media (prefers-reduced-motion: reduce) { .top { animation:none; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
-<div class="bg" aria-hidden="true"></div>
+<header class="top"><div class="org" id="org"></div></header>
 <div class="glow" aria-hidden="true"></div>
 <div class="card">
-  <div class="org" id="org"></div>
   <div class="avwrap">
     <div class="ring"></div>
     <div class="avatar" id="avatar"></div>
