@@ -32,6 +32,8 @@
              border-top:1px solid var(--line); font-size:16px; word-break:break-word; }
   .infos a:last-child { border-bottom:1px solid var(--line); }
   .infos span.ic { width:28px; text-align:center; font-size:18px; }
+  .infos .loc { display:flex; gap:12px; padding:12px 8px; border-top:1px solid var(--line); font-size:16px; word-break:break-word; }
+  .infos > :last-child { border-bottom:1px solid var(--line); }
   .btn { font-family:inherit; display:block; width:100%; padding:14px; border-radius:12px; font-size:16px; font-weight:500;
          text-decoration:none; border:none; cursor:pointer; margin-top:10px; }
   .btn.primary { background:var(--accent); color:var(--text); }
@@ -76,7 +78,7 @@ const C = {
   lienSociete: "https://fr.loccitane.com/qui-sommes-nous",   // le logo renvoie vers cette page
   logo:     "logo.png",    // laisse "" pour afficher le nom de la société en texte
   photo:    "photo.jpg",   // laisse "" pour afficher les initiales
-  ville:    "Manosque · Marseille"
+  lieux:    ["Manosque · R&D Center", "Marseille · Cosnat Neuroscience & Clinical Evaluation Lab"]
 };
 /* ======================================================== */
 
@@ -137,10 +139,10 @@ if (C.lienSociete) maison.href = C.lienSociete; else maison.remove();
 const infos = document.getElementById("infos");
 [["📞", C.tel, "tel:" + C.tel.replace(/\s/g,"")],
  ["✉️", C.email, "mailto:" + C.email],
- ["📍", C.ville, null]].forEach(([ic, label, href]) => {
+ ...(C.lieux || []).map(l => ["📍", l, null])].forEach(([ic, label, href]) => {
   if (!label) return;
   const a = document.createElement(href ? "a" : "div");
-  if (href) a.href = href; else a.style.cssText = "display:flex;gap:12px;padding:12px 8px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:16px";
+  if (href) a.href = href; else a.className = "loc";
   a.innerHTML = '<span class="ic">' + ic + '</span><span></span>';
   a.lastChild.textContent = label;
   infos.appendChild(a);
