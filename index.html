@@ -135,6 +135,7 @@ const C = {
   badge:    "PhD",         // laisse "" pour ne pas afficher de badge
   logo:     "logo.png",    // laisse "" pour afficher le nom de la société en texte
   photo:    "photo.jpg",   // laisse "" pour afficher les initiales
+  video:    "avatar.mp4",
   lieux:    [
     { ville: "Manosque",  site: "R&D Center" },
     { ville: "Marseille", site: "Cosnat Neuroscience & Clinical Evaluation Lab" }
@@ -193,6 +194,16 @@ if (C.photo) {
   img.alt = full;
   img.onerror = () => { avatar.textContent = (C.prenom[0] + C.nom[0]).toUpperCase(); };
   avatar.appendChild(img);
+  if (C.video) {
+    const v = document.createElement("video");
+    v.src = C.video; v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
+    v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("aria-hidden", "true");
+    v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s";
+    v.addEventListener("playing", () => { v.style.opacity = 1; });
+    v.addEventListener("error", () => v.remove());
+    avatar.appendChild(v);
+    const go = v.play(); if (go && go.catch) go.catch(() => {});
+  }
 } else {
   avatar.textContent = (C.prenom[0] + C.nom[0]).toUpperCase();
 }
